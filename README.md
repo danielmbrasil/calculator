@@ -2,7 +2,7 @@
 
 ## Run Instructions
 ```
-$ bunlde install
+$ bundle install
 $ bundle exec rackup
 ```
 
