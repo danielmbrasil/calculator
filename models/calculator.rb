@@ -20,4 +20,8 @@ class Calculator
   def self.sum(operands_array)
     operands_array.sum
   end
+
+  def self.subtract(operands_array)
+    operands_array.inject(:-)
+  end
 end
