@@ -24,4 +24,8 @@ class Calculator
   def self.subtract(operands_array)
     operands_array.inject(:-)
   end
+
+  def self.multiply(operands_array)
+    operands_array.inject(:*)
+  end
 end

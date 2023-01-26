@@ -190,4 +190,22 @@ describe Calculator do
       end
     end
   end
+
+  describe '#multiply' do
+    it 'multiplies a list of integers' do
+      operands = Calculator.parse('2 5 1 8 9 10')
+
+      result = Calculator.multiply(operands)
+
+      expect(result).to eq(7_200)
+    end
+
+    it 'multiplies a list of floats' do
+      operands = Calculator.parse('2.2 0.5e1 -1.3 8 9e-1 10.1')
+
+      result = Calculator.multiply(operands)
+
+      expect(result).to eq(-1039.896)
+    end
+  end
 end
