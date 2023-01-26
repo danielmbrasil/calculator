@@ -63,6 +63,35 @@ describe Calculator do
         expect(operands).to eq(expected_result)
       end
     end
+
+    context 'when string is empty' do
+      let(:input_string) { '' }
+
+      it 'raises Insufficient Operands error' do
+        expect { Calculator.parse(input_string) }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+      end
+    end
+
+    context 'when there is only one operand' do
+      let(:input_string) { '10' }
+
+      it 'raises Insufficient Operands error' do
+        expect { Calculator.parse(input_string) }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+      end
+    end
+
+    context 'when there is an invalid operand' do
+      let(:input_string_with_letter) { '10 25 a' }
+      let(:decimal_value_separated_by_comma) { '10 2,5 3.2' }
+
+      it 'raises Invalid Operand Error' do
+        expect { Calculator.parse(input_string_with_letter) }.to raise_error(CalculatorHandler::InvalidOperandError)
+      end
+
+      it 'raises Invalid Operand Error' do
+        expect { Calculator.parse(decimal_value_separated_by_comma) }.to raise_error(CalculatorHandler::InvalidOperandError)
+      end
+    end
   end
 
   describe '#sum' do
