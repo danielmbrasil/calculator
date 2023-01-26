@@ -26,6 +26,12 @@ class App < Sinatra::Base
       @result = Calculator.subtract operands
     when '*'
       @result = Calculator.multiply operands
+    when '/'
+      begin
+        @result = Calculator.divide operands
+      rescue ZeroDivisionError => e
+        halt 400, e.message
+      end
     end
 
     erb :index

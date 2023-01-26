@@ -89,4 +89,43 @@ describe App do
       expect(last_response.body).to include('124.0')
     end
   end
+
+  context 'when dividing zero operands' do
+    context 'when zero is numerator' do
+      let(:params) { { action: '/', operands: '0 65 0.12 8.5 5' } }
+
+      it 'returns status 200' do
+        post '/', params
+
+        expect(last_response.status).to eq(200)
+      end
+
+      it 'contains result' do
+        post '/', params
+
+        expect(last_response.body).to include('Result')
+        expect(last_response.body).to include('0.0')
+      end
+    end
+
+    context 'when zero is denominator' do
+      let(:params) { { action: '/', operands: '65 0.12 8.5 0' } }
+
+      it 'returns status 400' do
+        post '/', params
+
+        expect(last_response.status).to eq(400)
+      end
+    end
+
+    context 'when zero is divided by zero' do
+      let(:params) { { action: '/', operands: '0 0.12 8.5 0' } }
+
+      it 'returns status 400' do
+        post '/', params
+
+        expect(last_response.status).to eq(400)
+      end
+    end
+  end
 end
