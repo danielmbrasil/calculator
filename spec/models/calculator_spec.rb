@@ -83,6 +83,7 @@ describe Calculator do
     context 'when there is an invalid operand' do
       let(:input_string_with_letter) { '10 25 a' }
       let(:decimal_value_separated_by_comma) { '10 2,5 3.2' }
+      let(:input_string_with_symbol) { '10 & !* !()' }
 
       it 'raises Invalid Operand Error' do
         expect { Calculator.parse(input_string_with_letter) }.to raise_error(CalculatorHandler::InvalidOperandError)
@@ -90,6 +91,10 @@ describe Calculator do
 
       it 'raises Invalid Operand Error' do
         expect { Calculator.parse(decimal_value_separated_by_comma) }.to raise_error(CalculatorHandler::InvalidOperandError)
+      end
+
+      it 'raises Invalid Operand Error' do
+        expect { Calculator.parse(input_string_with_symbol) }.to raise_error(CalculatorHandler::InvalidOperandError)
       end
     end
   end
