@@ -72,4 +72,21 @@ describe App do
       expect(last_response.body).to include('-32.01')
     end
   end
+
+  context 'when multiplying valid operands' do
+    let(:params) { { action: '*', operands: '2.5 4 2e1 0.31 2e-1 1e+1' } }
+
+    it 'returns status 200' do
+      post '/', params
+
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'contains result' do
+      post '/', params
+
+      expect(last_response.body).to include('Result')
+      expect(last_response.body).to include('124.0')
+    end
+  end
 end

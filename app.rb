@@ -24,6 +24,8 @@ class App < Sinatra::Base
       @result = Calculator.sum operands
     when '-'
       @result = Calculator.subtract operands
+    when '*'
+      @result = Calculator.multiply operands
     end
 
     erb :index
