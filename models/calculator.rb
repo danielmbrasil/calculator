@@ -7,10 +7,11 @@ class Calculator
   VALID_NUMBER_REGEX = /\A((\+|-)?\d*\.?\d+)([eE](\+|-)?\d+)?\z/.freeze
 
   def self.parse(operands_string)
-    raise CalculatorHandler::InsufficientOperandsError if operands_string.empty?
-    raise CalculatorHandler::InsufficientOperandsError if operands_string.split.size < 2
+    operands_array = operands_string.split
 
-    operands_string.split.map do |operand|
+    raise CalculatorHandler::InsufficientOperandsError if operands_array.empty? || operands_array.size < 2
+
+    operands_array.map do |operand|
       raise CalculatorHandler::InvalidOperandError unless operand.match?(VALID_NUMBER_REGEX)
 
       operand.to_f

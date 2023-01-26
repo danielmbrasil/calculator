@@ -13,9 +13,7 @@ class App < Sinatra::Base
   post '/' do
     begin
       operands = Calculator.parse params[:operands]
-    rescue CalculatorHandler::InvalidOperandError => e
-      halt 400, e.message
-    rescue CalculatorHandler::InsufficientOperandsError => e
+    rescue CalculatorHandler::InvalidOperandError, CalculatorHandler::InsufficientOperandsError => e
       halt 400, e.message
     end
 
