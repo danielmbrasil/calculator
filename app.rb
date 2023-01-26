@@ -11,7 +11,14 @@ class App < Sinatra::Base
   end
 
   post '/' do
-    operands = Calculator.parse params[:operands]
+    begin
+      operands = Calculator.parse params[:operands]
+    rescue CalculatorHandler::InvalidOperandError => e
+      halt 400, e.message
+    rescue CalculatorHandler::InsufficientOperandsError => e
+      halt 400, e.message
+    end
+
     @result = Calculator.sum operands
     erb :index
   end
