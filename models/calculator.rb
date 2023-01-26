@@ -28,4 +28,12 @@ class Calculator
   def self.multiply(operands_array)
     operands_array.inject(:*)
   end
+
+  def self.divide(operands_array)
+    operands_array.inject do |sum, n|
+      raise ZeroDivisionError if n.zero?
+
+      sum / n
+    end
+  end
 end

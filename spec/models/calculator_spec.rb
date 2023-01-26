@@ -208,4 +208,42 @@ describe Calculator do
       expect(result).to eq(-1039.896)
     end
   end
+
+  describe '#divide' do
+    context 'when an operan equals to zero' do
+      context 'when zero is denominator' do
+        it 'returns zero division error' do
+          operands = Calculator.parse('15 85 1.2 0')
+
+          expect { Calculator.divide(operands) }.to raise_error(ZeroDivisionError)
+        end
+      end
+
+      context 'when zero is numerator' do
+        it 'returns zero' do
+          operands = Calculator.parse('0 15 32 8')
+
+          result = Calculator.divide(operands)
+
+          expect(result).to eq(0)
+        end
+      end
+
+      context 'when zero is divided by zero' do
+        it 'returns zero division error' do
+          operands = Calculator.parse('0 85 1.2 0')
+
+          expect { Calculator.divide(operands) }.to raise_error(ZeroDivisionError)
+        end
+      end
+    end
+
+    it 'divides a list of integers' do
+      operands = Calculator.parse('100 10 5')
+
+      result = Calculator.divide(operands)
+
+      expect(result).to eq(2)
+    end
+  end
 end
