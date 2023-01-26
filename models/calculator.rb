@@ -15,6 +15,14 @@ class Calculator
     parse(operands).inject(:*)
   end
 
+  def self.divide(operands)
+    parse(operands).inject do |sum, n|
+      raise ZeroDivisionError if n.zero?
+
+      sum / n
+    end
+  end
+
   def self.parse(operands_string)
     operands_array = operands_string.split
 
