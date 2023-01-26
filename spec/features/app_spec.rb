@@ -17,7 +17,7 @@ describe App do
 
   context 'when summing invalid operands' do
     it 'returns status 400' do
-      post '/', { operands: 'c 0 e 4' }
+      post '/', { action: '+', operands: 'c 0 e 4' }
 
       expect(last_response.status).to eq(400)
     end
@@ -25,7 +25,7 @@ describe App do
 
   context 'when summing no operands' do
     it 'returns status 400' do
-      post '/', { operands: '' }
+      post '/', { action: '+', operands: '' }
 
       expect(last_response.status).to eq(400)
     end
@@ -33,26 +33,43 @@ describe App do
 
   context 'when summing one operand' do
     it 'returns status 400' do
-      post '/', { operands: '1' }
+      post '/', { action: '+', operands: '1' }
 
       expect(last_response.status).to eq(400)
     end
   end
 
   context 'when summing valid operands' do
-    let(:param_string) { '2.5 4 2e1 0.31 2e-1 1e+1 -9' }
+    let(:params) { { action: '+', operands: '2.5 4 2e1 0.31 2e-1 1e+1 -9' } }
 
     it 'returns status 200' do
-      post '/', { operands: param_string }
+      post '/', params
 
       expect(last_response.status).to eq(200)
     end
 
     it 'contains result' do
-      post '/', { operands: param_string }
+      post '/', params
 
       expect(last_response.body).to include('Result')
       expect(last_response.body).to include('28.01')
+    end
+  end
+
+  context 'when subtracting valid operands' do
+    let(:params) { { action: '-', operands: '2.5 4 2e1 0.31 2e-1 1e+1' } }
+
+    it 'returns status 200' do
+      post '/', params
+
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'contains result' do
+      post '/', params
+
+      expect(last_response.body).to include('Result')
+      expect(last_response.body).to include('-32.01')
     end
   end
 end

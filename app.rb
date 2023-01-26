@@ -19,7 +19,13 @@ class App < Sinatra::Base
       halt 400, e.message
     end
 
-    @result = Calculator.sum operands
+    case params[:action]
+    when '+'
+      @result = Calculator.sum operands
+    when '-'
+      @result = Calculator.subtract operands
+    end
+
     erb :index
   end
 end
