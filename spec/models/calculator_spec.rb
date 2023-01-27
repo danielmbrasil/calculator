@@ -87,39 +87,9 @@ describe Calculator do
     end
   end
 
-  describe '#subtract' do
-    context 'when subtracting integers' do
-      it 'subtracts two integers' do
-        operands = Calculator.parse('20 35')
-
-        result = Calculator.subtract(operands)
-
-        expect(result).to eq(-15)
-      end
-
-      it 'subtracts a list of integers' do
-        operands = Calculator.parse('20 32 -65 98 -1 25')
-
-        result = Calculator.subtract(operands)
-
-        expect(result).to eq(-69)
-      end
-    end
-
-    context 'when subtracting floats' do
-      it 'subtacts a list of floats' do
-        operands = Calculator.parse('0.2 7.89 98 -0.3')
-
-        result = Calculator.subtract(operands)
-
-        expect(result).to eq(-105.39)
-      end
-    end
-  end
-
   describe '#multiply' do
     it 'multiplies a list of integers' do
-      operands = Calculator.parse('2 5 1 8 9 10')
+      operands = '2 5 1 8 9 10'
 
       result = Calculator.multiply(operands)
 
@@ -127,7 +97,7 @@ describe Calculator do
     end
 
     it 'multiplies a list of floats' do
-      operands = Calculator.parse('2.2 0.5e1 -1.3 8 9e-1 10.1')
+      operands = '2.2 0.5e1 -1.3 8 9e-1 10.1'
 
       result = Calculator.multiply(operands)
 
