@@ -48,7 +48,7 @@ describe App do
       expect(last_response.status).to eq(200)
     end
 
-    it 'contains result' do
+    it 'contains expected result' do
       post '/', { operands: param_string }
 
       expect(last_response.body).to include('Result')
