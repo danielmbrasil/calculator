@@ -16,11 +16,11 @@ class Calculator
   end
 
   def self.divide(operands)
-    parse(operands).inject do |sum, n|
-      raise ZeroDivisionError if n.zero?
+    operands = parse(operands)
 
-      sum / n
-    end
+    validate_denominators(operands[1..])
+
+    operands.inject(:/)
   end
 
   def self.parse(operands_string)
@@ -37,5 +37,9 @@ class Calculator
     raise CalculatorHandler::InvalidOperandError unless operands.all? { |operand| operand.match?(VALID_NUMBER_REGEX) }
   end
 
-  private_class_method :parse, :validate_operands
+  def self.validate_denominators(denominators)
+    raise ZeroDivisionError if denominators.any?(&:zero?)
+  end
+
+  private_class_method :parse, :validate_operands, :validate_denominators
 end
