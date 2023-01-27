@@ -48,8 +48,8 @@ describe App do
       expect(last_response.status).to eq(200)
     end
 
-    it 'contains result' do
-      post '/', params
+    it 'contains expected result' do
+      post '/', { operands: param_string }
 
       expect(last_response.body).to include('Result')
       expect(last_response.body).to include('28.01')
