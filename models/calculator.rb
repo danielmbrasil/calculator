@@ -28,5 +28,6 @@ class Calculator
 
     raise CalculatorHandler::InvalidOperandError unless operands.all? { |operand| operand.match?(VALID_NUMBER_REGEX) }
   end
+
   private_class_method :parse, :validate_operands
 end
