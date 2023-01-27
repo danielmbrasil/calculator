@@ -158,4 +158,100 @@ describe Calculator do
       end
     end
   end
+
+  describe '#divide' do
+    subject { Calculator.divide(input) }
+
+    context 'when input is valid' do
+      context 'when dividing integer numbers' do
+        let(:input) { '10 3' }
+
+        it 'divides correctly' do
+          expect(subject).to be_within(0.1).of(3.3)
+        end
+      end
+
+      context 'when dividing float numbers' do
+        let(:input) { '25.3 .1 0.7' }
+
+        it 'divides correctly' do
+          expect(subject).to be_within(0.1).of(361.4)
+        end
+      end
+
+      context 'when denominator is zero' do
+        let(:input) { '15 85 1.2 0' }
+
+        it 'returns zero division error' do
+          expect { subject }.to raise_error(ZeroDivisionError)
+        end
+      end
+
+      context 'when numerator is zero' do
+        let(:input) { '0 15 32 8' }
+
+        it 'returns zero' do
+          expect(subject).to eq(0)
+        end
+      end
+
+      context 'when zero is divided by zero' do
+        let(:input) { '0 85 1.2 0' }
+
+        it 'returns zero division error' do
+          expect { subject }.to raise_error(ZeroDivisionError)
+        end
+      end
+    end
+
+    context 'when input is invalid' do
+      context 'when input uses comma as decimal separator' do
+        let(:input) { '1,5 3,2 9,8' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input is empty' do
+        let(:input) { '' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+
+      context 'when input contains only one operand' do
+        let(:input) { '1' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+
+      context 'when input contains letters' do
+        let(:input) { '1.0 +1 2e a' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input contains special characters' do
+        let(:input) { '1.0 +1 5% 2!' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input values are separated by comma' do
+        let(:input) { '1.0,4.5,9,1e1' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+    end
+  end
 end

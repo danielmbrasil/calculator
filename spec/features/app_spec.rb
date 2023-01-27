@@ -100,4 +100,49 @@ describe App do
       end
     end
   end
+
+  context 'when dividing valid operands' do
+    let(:params) { { action: '/', operands: '1000 20' } }
+
+    it 'returns status 200' do
+      post '/', params
+
+      expect(last_response.status).to eq(200)
+    end
+
+    it 'contains expected result' do
+      post '/', params
+
+      expect(last_response.body).to include('Result')
+      expect(last_response.body).to include('50.0')
+    end
+  end
+
+  context 'when dividing invalid operands' do
+    context 'when operands use comma as decimal separator' do
+      let(:params) { { action: '/', operands: '50,5 5' } }
+
+      it 'returns status 400' do
+        post '/', params
+
+        expect(last_response.status).to eq(400)
+      end
+
+      it 'contains invalid operands error message' do
+        post '/', params
+
+        expect(last_response.body).to include('Invalid operand(s)')
+      end
+    end
+
+    context 'when no operands' do
+      let(:params) { { action: '/', operands: '' } }
+
+      it 'returns status 400' do
+        post '/', params
+
+        expect(last_response.status).to eq(400)
+      end
+    end
+  end
 end

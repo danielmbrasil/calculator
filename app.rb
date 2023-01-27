@@ -17,8 +17,10 @@ class App < Sinatra::Base
         @result = Calculator.sum params[:operands]
       when '*'
         @result = Calculator.multiply params[:operands]
+      when '/'
+        @result = Calculator.divide params[:operands]
       end
-    rescue CalculatorHandler::InvalidOperandError, CalculatorHandler::InsufficientOperandsError => e
+    rescue CalculatorHandler::InvalidOperandError, CalculatorHandler::InsufficientOperandsError, ZeroDivisionError => e
       halt 400, e.message
     end
 
