@@ -91,7 +91,7 @@ describe App do
     end
 
     context 'when no operands' do
-      let(:params) { { action: '*', operands: '2,5 4 2e1 0,31 2e-1 1e+1' } }
+      let(:params) { { action: '*', operands: '' } }
 
       it 'returns status 400' do
         post '/', params
