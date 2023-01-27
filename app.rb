@@ -12,26 +12,16 @@ class App < Sinatra::Base
 
   post '/' do
     begin
-      operands = Calculator.parse params[:operands]
-    rescue CalculatorHandler::InvalidOperandError => e
-      halt 400, e.message
-    rescue CalculatorHandler::InsufficientOperandsError => e
-      halt 400, e.message
-    end
-
-    case params[:action]
-    when '+'
-      @result = Calculator.sum operands
-    when '-'
-      @result = Calculator.subtract operands
-    when '*'
-      @result = Calculator.multiply operands
-    when '/'
-      begin
-        @result = Calculator.divide operands
-      rescue ZeroDivisionError => e
-        halt 400, e.message
+      case params[:action]
+      when '+'
+        @result = Calculator.sum params[:operands]
+      when '*'
+        @result = Calculator.multiply params[:operands]
+      when '/'
+        @result = Calculator.divide params[:operands]
       end
+    rescue CalculatorHandler::InvalidOperandError, CalculatorHandler::InsufficientOperandsError => e
+      halt 400, e.message
     end
 
     erb :index

@@ -48,28 +48,11 @@ describe App do
       expect(last_response.status).to eq(200)
     end
 
-    it 'contains result' do
+    it 'contains expected result' do
       post '/', params
 
       expect(last_response.body).to include('Result')
       expect(last_response.body).to include('28.01')
-    end
-  end
-
-  context 'when subtracting valid operands' do
-    let(:params) { { action: '-', operands: '2.5 4 2e1 0.31 2e-1 1e+1' } }
-
-    it 'returns status 200' do
-      post '/', params
-
-      expect(last_response.status).to eq(200)
-    end
-
-    it 'contains result' do
-      post '/', params
-
-      expect(last_response.body).to include('Result')
-      expect(last_response.body).to include('-32.01')
     end
   end
 
@@ -82,7 +65,7 @@ describe App do
       expect(last_response.status).to eq(200)
     end
 
-    it 'contains result' do
+    it 'contains expected result' do
       post '/', params
 
       expect(last_response.body).to include('Result')
@@ -90,36 +73,25 @@ describe App do
     end
   end
 
-  context 'when dividing zero operands' do
-    context 'when zero is numerator' do
-      let(:params) { { action: '/', operands: '0 65 0.12 8.5 5' } }
-
-      it 'returns status 200' do
-        post '/', params
-
-        expect(last_response.status).to eq(200)
-      end
-
-      it 'contains result' do
-        post '/', params
-
-        expect(last_response.body).to include('Result')
-        expect(last_response.body).to include('0.0')
-      end
-    end
-
-    context 'when zero is denominator' do
-      let(:params) { { action: '/', operands: '65 0.12 8.5 0' } }
+  context 'when multiplying invalid operands' do
+    context 'when operands use comma as decimal separator' do
+      let(:params) { { action: '*', operands: '2,5 4 2e1 0,31 2e-1 1e+1' } }
 
       it 'returns status 400' do
         post '/', params
 
         expect(last_response.status).to eq(400)
       end
+
+      it 'contains invalid operands error message' do
+        post '/', params
+
+        expect(last_response.body).to include('Invalid operand(s)')
+      end
     end
 
-    context 'when zero is divided by zero' do
-      let(:params) { { action: '/', operands: '0 0.12 8.5 0' } }
+    context 'when no operands' do
+      let(:params) { { action: '*', operands: '2,5 4 2e1 0,31 2e-1 1e+1' } }
 
       it 'returns status 400' do
         post '/', params
