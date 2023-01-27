@@ -4,14 +4,14 @@ require_relative '../spec_helper'
 
 describe Calculator do
   describe '#sum' do
+    subject { Calculator.sum(input) }
+
     context 'when input is valid' do
       context 'when input contains only integer numbers' do
         let(:input) { '20 15 32 18 +1000 95 -9 1e1 10e-1' }
 
         it 'it adds up numbers correctly' do
-          result = Calculator.sum(input)
-
-          expect(result).to eq(1182)
+          expect(subject).to eq(1182)
         end
       end
 
@@ -19,9 +19,7 @@ describe Calculator do
         let(:input) { '2.0 .15 -.32 +18.2 +.1e-1 +9.5 -9.75 1e-1' }
 
         it 'it adds up numbers correctly' do
-          result = Calculator.sum(input)
-
-          expect(result).to eq(19.89)
+          expect(subject).to eq(19.89)
         end
       end
 
@@ -29,9 +27,7 @@ describe Calculator do
         let(:input) { '20 15 32 18 +1000 95 -9 10e-1 -0.32 +18.2 +9.5 -9.75 1e-1' }
 
         it 'it adds up numbers correctly' do
-          result = Calculator.sum(input)
-
-          expect(result).to eq(1189.73)
+          expect(subject).to eq(1189.73)
         end
       end
     end
@@ -41,7 +37,7 @@ describe Calculator do
         let(:input) { '15 1e5 10,2' }
 
         it 'raises InvalidOperandError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InvalidOperandError)
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
         end
       end
 
@@ -49,7 +45,7 @@ describe Calculator do
         let(:input) { '' }
 
         it 'raises InsufficientOperandsError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
         end
       end
 
@@ -57,7 +53,7 @@ describe Calculator do
         let(:input) { '1' }
 
         it 'raises InsufficientOperandsError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
         end
       end
 
@@ -65,7 +61,7 @@ describe Calculator do
         let(:input) { '1.0 +1 2e a' }
 
         it 'raises InvalidOperandError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InvalidOperandError)
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
         end
       end
 
@@ -73,7 +69,7 @@ describe Calculator do
         let(:input) { '1.0 +1 5% 2!' }
 
         it 'raises InvalidOperandError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InvalidOperandError)
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
         end
       end
 
@@ -81,7 +77,7 @@ describe Calculator do
         let(:input) { '1.0,4.5,9,1e1' }
 
         it 'raises InsufficientOperandsError' do
-          expect { Calculator.sum(input) }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
         end
       end
     end
