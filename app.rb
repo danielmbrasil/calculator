@@ -12,7 +12,12 @@ class App < Sinatra::Base
 
   post '/' do
     begin
-      @result = Calculator.sum params[:operands]
+      case params[:action]
+      when '+'
+        @result = Calculator.sum params[:operands]
+      when '*'
+        @result = Calculator.multiply params[:operands]
+      end
     rescue CalculatorHandler::InvalidOperandError, CalculatorHandler::InsufficientOperandsError => e
       halt 400, e.message
     end

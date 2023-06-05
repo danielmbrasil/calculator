@@ -82,4 +82,76 @@ describe Calculator do
       end
     end
   end
+
+  describe '#multiply' do
+    subject { Calculator.multiply(input) }
+
+    context 'when input is valid' do
+      context 'when input contains only integer numbers' do
+        let(:input) { '1 2 3 4 5' }
+
+        it 'multiplies numbers correctly' do
+          expect(subject).to eq(120)
+        end
+      end
+
+      context 'when input contains float numbers' do
+        let(:input) { '.1 .2 .3' }
+
+        it 'multiplies numbers correctly' do
+          expect(subject).to be_within(0.1).of(0.1)
+        end
+      end
+    end
+
+    context 'when input is invalid' do
+      context 'when input uses comma as decimal separator' do
+        let(:input) { '1,5 3,2 9,8' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input is empty' do
+        let(:input) { '' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+
+      context 'when input contains only one operand' do
+        let(:input) { '1' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+
+      context 'when input contains letters' do
+        let(:input) { '1.0 +1 2e a' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input contains special characters' do
+        let(:input) { '1.0 +1 5% 2!' }
+
+        it 'raises InvalidOperandError' do
+          expect { subject }.to raise_error(CalculatorHandler::InvalidOperandError)
+        end
+      end
+
+      context 'when input values are separated by comma' do
+        let(:input) { '1.0,4.5,9,1e1' }
+
+        it 'raises InsufficientOperandsError' do
+          expect { subject }.to raise_error(CalculatorHandler::InsufficientOperandsError)
+        end
+      end
+    end
+  end
 end

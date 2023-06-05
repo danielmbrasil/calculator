@@ -9,7 +9,8 @@
 <form action="/" method="post">
   <label for="operands">Operands:</label>
   <input type="text" id="operands" name="operands">
-  <input type="submit" value="Sum!">
+  <input type="submit" name="action" value="+">
+  <input type="submit" name="action" value="*">
 </form>
 
 <% unless @result.nil? %>

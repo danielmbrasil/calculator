@@ -11,6 +11,10 @@ class Calculator
     parse(operands).sum
   end
 
+  def self.multiply(operands)
+    parse(operands).inject(:*)
+  end
+
   def self.parse(operands_string)
     operands_array = operands_string.split
 
